@@ -1,0 +1,63 @@
+SELECT * FROM demo;
+CREATE TABLE consultas (
+	cod_consulta			INTEGER NOT NULL,
+  	crm						VARCHAR NOT NULL,
+  	cpf						VARCHAR NOT NULL,
+  	descricao_consulta		VARCHAR NOT NULL,
+  	data_consulta			DATETIME NOT NULL,
+  	CONSTRAINT pk_consultas
+  		PRIMARY KEY (cod_consulta)
+    CONSTRAINT fk_consultas_crm
+        FOREIGN KEY (crm) 
+        REFERENCES medicos(crm),
+    CONSTRAINT fk_consultas_cpf
+        FOREIGN KEY (cpf)
+        REFERENCES pacientes(cpf)
+);
+CREATE TABLE medicos (
+	crm				INTEGER NOT NULL,
+    nome_medico		VARCHAR NOT NULL,
+    CONSTRAINT pk_medicos
+    	PRIMARY KEY (crm)
+ );
+CREATE TABLE pacientes (
+	cpf				VARCHAR NOT NULL,
+	rg				VARCHAR NOT NULL UNIQUE,
+  	nome_paciente	VARCHAR NOT NULL,
+  	CONSTRAINT pk_pacientes
+  		PRIMARY KEY (cpf)
+);
+CREATE TABLE receitas (
+	num_receita			INTEGER NOT NULL,
+    cod_consulta		INTEGER NOT NULL,
+    rf					VARCHAR NOT NULL,
+    data_emissao		DATETIME NOT NULL,
+    descricao_receita	VARCHAR NOT NULL,
+    CONSTRAINT pk_receitas
+  		PRIMARY KEY (num_receita)
+    CONSTRAINT fk_receitas_cod_consulta
+        FOREIGN KEY (cod_consulta)
+        REFERENCES consultas(cod_consulta),
+    CONSTRAINT fk_receitas_rf
+        FOREIGN KEY (rf)
+        REFERENCES medicamentos(rf)
+);
+CREATE TABLE medicamentos (
+	rf					VARCHAR NOT NULL,
+  	cod_tipo			INTEGER NOT NULL,
+  	nome_medicamento	VARCHAR NOT NULL,
+  	posologia_mdu		VARCHAR NOT NULL,
+  	custo_medicamento	DECIMAL NOT NULL,
+  	fabricante			VARCHAR NOT NULL,
+  	CONSTRAINT pk_medicamentos
+  		PRIMARY KEY (rf)
+    CONSTRAINT fk_medicamentos_cod_tipo
+        FOREIGN KEY (cod_tipo)
+        REFERENCES tipo_medicamento(cod_tipo)
+);
+CREATE TABLE tipo_medicamento (
+ 	cod_tipo			INTEGER NOT NULL,
+  	sem_tarja			BOOLEAN NOT NULL,
+  	tarja_preta			BOOLEAN NOT NULL,
+  	tarja_vermelha		BOOLEAN NOT NULL
+);
