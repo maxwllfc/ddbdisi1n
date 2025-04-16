@@ -1,0 +1,28 @@
+SELECT * FROM demo;
+CREATE TABLE novelas (
+	id_novela		INTEGER,
+  	nome_novela		VARCHAR,
+  	resumo_novela	VARCHAR,
+  	id_emissora		INTEGER,
+	CONSTRAINT pk_novelas 
+  		PRIMARY KEY (id_novela)
+  	CONSTRAINT fk_novelas_id_emissora
+  		FOREIGN KEY (id_emissora)
+  		REFERENCES emissoras (id_emissora)
+);
+CREATE TABLE emissoras (
+	id_emissora		INTEGER,
+    nome_emissora	VARCHAR,
+    CONSTRAINT pk_emissoras
+    	PRIMARY KEY (id_emissora)
+);
+CREATE TABLE atores (
+	id_ator				INTEGER,
+  	cpf_ator			VARCHAR UNIQUE,
+  	nome_ator			VARCHAR,
+  	data_participacao	DATE,
+ 	id_novela           INTEGER,
+	CONSTRAINT fk_atores_id_novela
+		FOREIGN KEY (id_novela)
+		REFERENCES novelas(id_novela)
+);
