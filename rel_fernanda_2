@@ -1,0 +1,12 @@
+SELECT cr.nome_cor, sc.qtd FROM (
+	SELECT cod_cor, COUNT(cod_cor) qtd
+  	FROM rocha GROUP BY cod_cor
+) sc, cor cr
+WHERE
+	sc.cod_cor = cr.cod_cor
+    AND qtd = (
+    SELECT MAX(con.qtd) FROM (
+        select r.cod_cor, COUNT(r.cod_cor) qtd
+        FROM rocha r GROUP BY r.cod_cor
+    ) con
+);
