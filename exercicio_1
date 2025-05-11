@@ -30,3 +30,29 @@ CREATE TABLE itens_fatura (
     FOREIGN KEY (num_fatura) REFERENCES faturas(num_fatura),
     FOREIGN KEY (cod_produto) REFERENCES produtos(cod_produto)
 );
+
+ALTER TABLE clientes
+	ADD historico VARCHAR (244)
+	CHANGE nome_cliente VARCHAR (30)
+    DROP credito;
+    
+ALTER TABLE faturas
+	RENAME pedidos
+    ADD data_ped INTEGER;
+    
+ALTER TABLE produtos
+	ADD preco_compra INTEGER
+    CHANGE descricao VARCHAR (25);
+    
+ALTER TABLE itens_fatura
+	ADD preco_venda INTEGER
+    CHANGE quantidade INT (5)
+    DROP valor
+    RENAME itens_pedido
+
+drop TABLE itens_fatura
+    
+SELECT * FROM clientes;
+SELECT * FROM faturas;
+SELECT * FROM itens_fatura;
+SELECT * FROM produtos;
