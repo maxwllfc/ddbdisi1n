@@ -1,27 +1,32 @@
+CREATE TABLE clientes (
+    cod_cliente		INTEGER,
+    nome_cliente	VARCHAR(100),
+    endereco		VARCHAR(200),
+    credito			INTEGER,
+    tipo			VARCHAR(50),
+    cpf				VARCHAR(15), 
+    PRIMARY KEY (cod_cliente)
+);
+
+CREATE TABLE produtos (
+    cod_produto		INTEGER,
+    descricao		VARCHAR(255),
+    PRIMARY KEY (cod_produto)
+);
+
 CREATE TABLE faturas (
 	num_fatura		INTEGER,
     cod_cliente		INTEGER,
-    PRIMARY KEY (num_fatura)
+    PRIMARY KEY (num_fatura),
+    FOREIGN KEY (cod_cliente) REFERENCES clientes(cod_cliente)
 );
-CREATE TABLE produtos (
-  	cod_produto		INTEGER,
-  	descricao		VARCHAR,
-  	PRIMARY KEY (cod_produto)
-);
-CREATE TABLE clientes (
-  	cod_cliente		INTEGER,
-  	nome_cliente	VARCHAR,
-  	endereco		VARCHAR,
-  	credito			INTEGER,
-  	tipo			VARCHAR,
-  	cpf				VARCHAR,
-  	PRIMARY KEY (cod_cliente)
-);
+
 CREATE TABLE itens_fatura (
 	num_fatura		INTEGER,
-  	cod_produto		INTEGER,
-  	quantidade		INTEGER,
-  	valor			DECIMAL,
-  	PRIMARY KEY (num_fatura)
-  	FOREIGN KEY (cod_produto) REFERENCES produtos_cod_produto
+    cod_produto		INTEGER,
+    quantidade		INTEGER,
+    valor			DECIMAL,
+    PRIMARY KEY (num_fatura, cod_produto),
+    FOREIGN KEY (num_fatura) REFERENCES faturas(num_fatura),
+    FOREIGN KEY (cod_produto) REFERENCES produtos(cod_produto)
 );
