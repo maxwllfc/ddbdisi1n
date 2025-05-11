@@ -1,0 +1,114 @@
+-- Criação da tabela clientes (CORRIGIDO)
+CREATE TABLE clientes (
+	cpf			INTEGER,
+	nome		VARCHAR (100),
+	num_conta	INTEGER,
+	telefone	VARCHAR (24),
+	cidade		VARCHAR (50),
+	PRIMARY KEY (cpf)
+);
+
+-- Criação da tabela carros (CORRETO)
+CREATE TABLE carros (
+	chassi		VARCHAR (3),
+	modelo		VARCHAR (50),
+	cor			VARCHAR (50),
+	ano			INTEGER,
+	valor		DECIMAL,
+	PRIMARY KEY (chassi)
+);
+
+-- Criação da tabela alugueis (CORRIGIDO)
+CREATE TABLE alugueis (
+	cpf				INTEGER,
+	chassi			VARCHAR (3),
+	data_entrada	DATE,
+	data_saida		DATE,
+	total			DECIMAL,
+	FOREIGN KEY (cpf) REFERENCES clientes(cpf),
+	FOREIGN KEY (chassi) REFERENCES carros(chassi)
+);
+
+-- Inserção de dados na tabela clientes (CORRIGIDO)
+INSERT INTO clientes (nome, cpf, num_conta, telefone, cidade)
+VALUES ('Ana', 111111, 2317, '019','Campinas'),
+	   ('Fábio', 222222, 1711, '019','Jundaí'),
+	   ('Maria', 121111, 7121, '011','São Paulo'),
+	   ('Flávio', 321222, 2211, '019','Campinas'),
+	   ('Fernando', 123111, 1123, '031','Rio de Janeiro'),
+	   ('Marta', 117222, 3211, '021','Belo Horizonte'),
+	   (NULL, NULL, NULL , NULL, NULL); -- Cuidado com a chave primária CPF
+
+-- Inserção de dados na tabela carros (CORRETO)
+INSERT INTO carros (chassi, modelo, cor, ano)
+VALUES ('A21', 'UNO', 'Prata', 2003),
+	   ('2AC', 'Gol', 'Preto', 2004),
+	   ('33A', 'Corsa', 'Branco', 2005),
+	   ('12C', 'Uno', 'Verde', 2001),
+	   ('1C2', 'Astra', 'Prata', 2005),
+	   ('22A', 'Gol', 'Prata', 2005);
+
+-- Inserção de dados na tabela alugueis (CORRIGIDO)
+INSERT INTO alugueis (cpf, chassi, data_entrada, data_saida)
+VALUES (111111, '33A', '2006-07-21', '2006-08-05'),
+	   (222222, '12C', '2006-07-21', NULL),
+	   (222222, '33A', '2006-07-23', '2006-08-06'),
+	   (222222, '1C2', '2006-07-24', NULL);
+
+-- Inserção de dados na tabela carros (CORRETO)
+INSERT INTO carros (chassi, modelo, cor, ano, valor)
+VALUES (NULL, NULL, NULL, NULL, NULL);
+
+-- Atualização de dados na tabela clientes (CORRIGIDO)
+UPDATE clientes
+	SET telefone = '019';
+
+-- Atualização de dados na tabela clientes (CORRIGIDO - Considerando capitalização)
+UPDATE clientes
+	SET nome = 'André'
+	WHERE nome = 'Flávio';
+
+-- Atualização de dados na tabela clientes (CORRIGIDO)
+UPDATE clientes
+	SET cidade = 'Brasília'
+	WHERE num_conta > 2000;
+
+-- Atualização de dados na tabela carros (CORRETO)
+UPDATE carros
+	SET valor = 20000;
+
+-- Atualização de dados na tabela carros (CORRIGIDO - Usando OR)
+UPDATE carros
+	SET cor = 'Azul'
+	WHERE modelo = 'UNO' OR modelo = 'Corsa';
+
+-- Atualização de dados na tabela alugueis (CORRETO)
+UPDATE alugueis
+	SET data_saida = NULL;
+
+-- Exclusão de dados da tabela carros (CORRETO)
+DELETE FROM carros
+	WHERE chassi = '22A' OR cor = 'prata';
+
+-- Exclusão de dados da tabela carros (CORRIGIDO)
+DELETE FROM carros
+	WHERE ano = 2003 AND ano = 2004;
+
+-- Exclusão de dados da tabela carros (CORRETO)
+DELETE FROM carros
+	WHERE modelo = 'Gol' AND cor = 'prata';
+
+-- Exclusão de dados da tabela carros (CORRETO)
+DELETE FROM carros
+	WHERE valor < 2000 AND valor > 1000;
+
+-- Exclusão de dados da tabela clientes (CORRETO)
+DELETE FROM clientes
+	WHERE telefone = '019' AND cidade = 'Campinas';
+
+-- Exclusão de dados da tabela clientes (CORRETO)
+DELETE FROM clientes
+	WHERE cpf = 111111;
+
+-- Exclusão de todos os dados da tabela alugueis (CORRETO)
+DELETE FROM alugueis;
